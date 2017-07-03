@@ -6,7 +6,7 @@
  *
  */
 
-namespace Evis\TwoFactorAuthBundle\Controller\Web;
+namespace Evis\TwoFactorAuthBundle\Controller;
 
 use Evis\TwoFactorAuthBundle\Model\TwoFactorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
