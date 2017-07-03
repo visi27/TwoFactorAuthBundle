@@ -1,0 +1,38 @@
+parameters:
+  evis_two_factor_auth.twofactor.email.provider.class: Evis\TwoFactorAuthBundle\Security\TwoFactor\Email\Helper
+  evis_two_factor_auth.twofactor.google.provider.class: Evis\TwoFactorAuthBundle\Security\TwoFactor\Google\Helper
+  evis_two_factor_auth.twofactor.google.class: Google\Authenticator\GoogleAuthenticator
+
+  evis_two_factor_auth.twofactor.interactive_login_listener.class: Evis\TwoFactorAuthBundle\Security\TwoFactor\InteractiveLoginListener
+  evis_two_factor_auth.twofactor.request_listener.class: Evis\TwoFactorAuthBundle\Security\TwoFactor\RequestListener
+  evis_two_factor_auth.security.param.servername: test.local.al
+
+services:
+  evis_two_factor_auth.security.twofactor.google:
+    class: "%evis_two_factor_auth.twofactor.google.class%"
+  evis_two_factor_auth.security.twofactor.google.provider:
+    class: "%evis_two_factor_auth.twofactor.google.provider.class%"
+    arguments: ["%evis_two_factor_auth.security.param.servername%", "@evis_two_factor_auth.security.twofactor.google"]
+
+  evis_two_factor_auth.security.twofactor.email.provider:
+    class: "%evis_two_factor_auth.twofactor.email.provider.class%"
+    arguments: ["@doctrine.orm.entity_manager", "@swiftmailer.mailer"]
+
+  evis_two_factor_auth.security.twofactor.provide_factory:
+    class: Evis\TwoFactorAuthBundle\Security\TwoFactor\HelperFactory
+    arguments: ["@evis_two_factor_auth.security.twofactor.email.provider", "@evis_two_factor_auth.security.twofactor.google.provider"]
+
+  evis_two_factor_auth.security.twofactor.interactive_login_listener:
+    class: "%evis_two_factor_auth.twofactor.interactive_login_listener.class%"
+    arguments: ["@evis_two_factor_auth.security.twofactor.provide_factory"]
+    tags:
+      - { name: kernel.event_listener, event: security.interactive_login, method: onSecurityInteractiveLogin }
+
+  evis_two_factor_auth.security.twofactor.request_listener:
+    class: "%evis_two_factor_auth.twofactor.request_listener.class%"
+    arguments: ["@evis_two_factor_auth.security.twofactor.provide_factory","@security.token_storage", "@templating","@router", "@app.security.encryption_service"]
+    tags:
+      - { name: kernel.event_listener, event: kernel.request, method: onCoreRequest, priority: -1 }
+#    evis_two_factor_auth.example:
+#        class: Evis\TwoFactorAuthBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
