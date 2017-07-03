@@ -1,7 +1,7 @@
 {
   "name": "evis/twofactor-bundle",
   "type": "symfony-bundle",
-  "description": "This Bundle provides enables two-factor authentication through Google Authenticator or email",
+  "description": "This Bundle enables two-factor authentication through Google Authenticator or email",
   "keywords": ["security", "2fa", "auth"],
   "homepage": "https://github.com/visi27/TwoFactorAuthBundle",
   "license": "MIT",
