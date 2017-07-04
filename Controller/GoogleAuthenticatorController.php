@@ -44,7 +44,7 @@ class GoogleAuthenticatorController extends Controller
             //Flag authentication complete
             $this->addFlash('error', 'Google Authenticator Is Already Active');
 
-            return $this->redirectToRoute('user_dashboard');
+            return $this->redirectToRoute($this->get('user_dashboard_route'));
         }
 
         $helper = $this->get('evis_two_factor_auth.security.twofactor.google.provider');
@@ -52,7 +52,7 @@ class GoogleAuthenticatorController extends Controller
         if ($request->getMethod() === 'POST') {
             //check authentication key
             //Check the authentication code
-            $authKey = $this->get('app.security.encryption_service')->decrypt($user->getGoogleAuthenticatorCode());
+            $authKey = $this->get($this->get('encryption_service'))->decrypt($user->getGoogleAuthenticatorCode());
             if ($helper->checkCode($authKey, $request->get('_auth_code')) === true) {
                 //activate 2fa authenticator
                 $user->setTwoFactorAuthentication(true);
@@ -62,7 +62,7 @@ class GoogleAuthenticatorController extends Controller
                 $this->getDoctrine()->getManager()->flush();
                 $this->addFlash('success', 'Google Authenticator Activated');
 
-                return $this->redirectToRoute('user_dashboard');
+                return $this->redirectToRoute($this->get('user_dashboard_route'));
             }
             $this->addFlash('error', 'Invalid Code');
             $qrCodeUrl = $helper->getUrl($user, $authKey);
