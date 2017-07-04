@@ -22,6 +22,11 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+                ->scalarNode('encryption_service_class')
+                    ->defaultValue('Evis\TwoFactorAuthBundle\Security\Encryption\DummyEcryptionService')
+                    ->info('Fully Qualified Encryption Service Class Name')
+                    ->example('AppBundle\Security\EncryptionService')
+                ->end()
                 ->scalarNode('homepage_route')
                     ->defaultValue('homepage')
                     ->info('Name of homepage route')

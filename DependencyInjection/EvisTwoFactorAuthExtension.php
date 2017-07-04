@@ -25,6 +25,11 @@ class EvisTwoFactorAuthExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
+        if (isset($config['encryption_service_class'])) {
+            $container->setParameter('encryption_service_class', $config['encryption_service_class']);
+        }else{
+            $container->setParameter('encryption_service_class', 'Evis\TwoFactorAuthBundle\Security\Encryption\DummyEcryptionService');
+        }
         if (isset($config['homepage_route'])) {
             $container->setParameter('homepage_route', $config['homepage_route']);
         }else{

@@ -8,7 +8,7 @@
 
 namespace Evis\TwoFactorAuthBundle\Security\TwoFactor;
 
-use AppBundle\Security\Encryption\EncryptionService;
+use Evis\TwoFactorAuthBundle\Security\Encryption\EncryptionServiceInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Security\Authentication\Token\JWTUserToken;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
@@ -44,7 +44,7 @@ class RequestListener
      */
     private $helperFactory;
     /**
-     * @var EncryptionService
+     * @var EncryptionServiceInterface
      */
     private $encryptionService;
     private $homepageRoute;
@@ -56,7 +56,7 @@ class RequestListener
      * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $securityContext
      * @param \Symfony\Bundle\FrameworkBundle\Templating\EngineInterface $templating
      * @param \Symfony\Bundle\FrameworkBundle\Routing\Router $router
-     * @param EncryptionService $encryptionService
+     * @param EncryptionServiceInterface $encryptionService
      *
      * @param $homepageRoute
      * @internal param HelperInterface $helper
@@ -66,7 +66,7 @@ class RequestListener
         TokenStorageInterface $securityContext,
         EngineInterface $templating,
         Router $router,
-        EncryptionService $encryptionService,
+        EncryptionServiceInterface $encryptionService,
         $homepageRoute
     ) {
         $this->securityContext = $securityContext;
