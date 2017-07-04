@@ -24,5 +24,23 @@ class EvisTwoFactorAuthExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+
+        if (isset($config['homepage_route'])) {
+            $container->setParameter('homepage_route', $config['homepage_route']);
+        }else{
+            $container->setParameter('homepage_route', 'homepage');
+        }
+
+        if (isset($config['user_dashboard_route'])) {
+            $container->setParameter('user_dashboard_route', $config['user_dashboard_route']);
+        }else{
+            $container->setParameter('user_dashboard_route', 'user_dashboard');
+        }
+
+        if (isset($config['encryption_service'])) {
+            $container->setParameter('encryption_service', $config['encryption_service']);
+        }else{
+            $container->setParameter('encryption_service', 'app.security.encryption_service');
+        }
     }
 }

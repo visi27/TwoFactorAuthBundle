@@ -20,9 +20,25 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('evis_two_factor_auth');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+            ->children()
+                ->scalarNode('homepage_route')
+                    ->defaultValue('homepage')
+                    ->info('Name of homepage route')
+                    ->example('my_homepage_route_name')
+                ->end()
+                ->scalarNode('user_dashboard_route')
+                    ->defaultValue('user_dashboard')
+                    ->info('Name of user dashboard route')
+                    ->example('my_dashboard_route')
+                ->end()
+                ->scalarNode('encryption_service')
+                    ->defaultValue('app.security.encryption_service')
+                    ->info('Configuration key of encryptions service')
+                    ->example('my.security.encryption.service')
+                ->end()
+            ->end()
+        ;
 
         return $treeBuilder;
     }
