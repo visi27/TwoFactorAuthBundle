@@ -130,7 +130,7 @@ class RequestListener
         }
 
         //Force authentication code dialog
-        $response = $this->templating->renderResponse('twofactor/2fa_code.html.twig');
+        $response = $this->templating->renderResponse('EvisTwoFactorAuthBundle:twofactor:2fa_code.html.twig');
         $event->setResponse($response);
     }
 }

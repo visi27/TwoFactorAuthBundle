@@ -67,7 +67,7 @@ class GoogleAuthenticatorController extends Controller
             $this->addFlash('error', 'Invalid Code');
             $qrCodeUrl = $helper->getUrl($user, $authKey);
 
-            return $this->render('twofactor/activate.html.twig', ['qrCodeURL' => $qrCodeUrl]);
+            return $this->render('EvisTwoFactorAuthBundle:twofactor:activate.html.twig', ['qrCodeURL' => $qrCodeUrl]);
         }
             //generate new key
             $code = $helper->generateSecret();
@@ -79,6 +79,6 @@ class GoogleAuthenticatorController extends Controller
 
         $qrCodeUrl = $helper->getUrl($user, $code);
 
-        return $this->render('twofactor/activate.html.twig', ['qrCodeURL' => $qrCodeUrl]);
+        return $this->render('EvisTwoFactorAuthBundle:twofactor:activate.html.twig', ['qrCodeURL' => $qrCodeUrl]);
     }
 }
