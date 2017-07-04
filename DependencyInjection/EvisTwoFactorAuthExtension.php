@@ -28,7 +28,7 @@ class EvisTwoFactorAuthExtension extends Extension
         if (isset($config['encryption_service_class'])) {
             $container->setParameter('encryption_service_class', $config['encryption_service_class']);
         }else{
-            $container->setParameter('encryption_service_class', 'Evis\TwoFactorAuthBundle\Security\Encryption\DummyEcryptionService');
+            $container->setParameter('encryption_service_class', 'Evis\TwoFactorAuthBundle\Security\Encryption\DummyEncryptionService');
         }
         if (isset($config['homepage_route'])) {
             $container->setParameter('homepage_route', $config['homepage_route']);
