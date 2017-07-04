@@ -30,7 +30,7 @@ services:
 
   evis_two_factor_auth.security.twofactor.request_listener:
     class: "%evis_two_factor_auth.twofactor.request_listener.class%"
-    arguments: ["@evis_two_factor_auth.security.twofactor.provide_factory","@security.token_storage", "@templating","@router", "@app.security.encryption_service"]
+    arguments: ["@evis_two_factor_auth.security.twofactor.provide_factory","@security.token_storage", "@templating","@router", "@app.security.encryption_service", "%homepage_route%"]
     tags:
       - { name: kernel.event_listener, event: kernel.request, method: onCoreRequest, priority: -1 }
 #    evis_two_factor_auth.example:

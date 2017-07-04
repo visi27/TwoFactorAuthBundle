@@ -47,16 +47,18 @@ class RequestListener
      * @var EncryptionService
      */
     private $encryptionService;
+    private $homepageRoute;
 
     /**
      * Construct the listener.
      *
-     * @param HelperFactory                                                                       $helperFactory
+     * @param HelperFactory $helperFactory
      * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $securityContext
-     * @param \Symfony\Bundle\FrameworkBundle\Templating\EngineInterface                          $templating
-     * @param \Symfony\Bundle\FrameworkBundle\Routing\Router                                      $router
-     * @param EncryptionService                                                                   $encryptionService
+     * @param \Symfony\Bundle\FrameworkBundle\Templating\EngineInterface $templating
+     * @param \Symfony\Bundle\FrameworkBundle\Routing\Router $router
+     * @param EncryptionService $encryptionService
      *
+     * @param $homepageRoute
      * @internal param HelperInterface $helper
      */
     public function __construct(
@@ -64,13 +66,15 @@ class RequestListener
         TokenStorageInterface $securityContext,
         EngineInterface $templating,
         Router $router,
-        EncryptionService $encryptionService
+        EncryptionService $encryptionService,
+        $homepageRoute
     ) {
         $this->securityContext = $securityContext;
         $this->templating = $templating;
         $this->router = $router;
         $this->helperFactory = $helperFactory;
         $this->encryptionService = $encryptionService;
+        $this->homepageRoute = $homepageRoute;
     }
 
     /**
@@ -121,7 +125,7 @@ class RequestListener
                 $session->set($key, true);
 
                 //Redirect to user's dashboard
-                $redirect = new RedirectResponse($this->router->generate('homepage'));
+                $redirect = new RedirectResponse($this->router->generate($this->homepageRoute));
                 $event->setResponse($redirect);
 
                 return;
